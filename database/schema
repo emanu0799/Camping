@@ -1,0 +1,58 @@
+create table if not exists users (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text unique,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists trips (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  invite_code text not null unique,
+  starts_at date,
+  ends_at date,
+  created_by uuid references users(id) on delete set null,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists trip_members (
+  id uuid primary key default gen_random_uuid(),
+  trip_id uuid not null references trips(id) on delete cascade,
+  user_id uuid not null references users(id) on delete cascade,
+  role text not null default 'member',
+  device_id text,
+  joined_at timestamptz not null default now(),
+  unique (trip_id, user_id)
+);
+
+create table if not exists checklist_items (
+  id uuid primary key default gen_random_uuid(),
+  trip_id uuid not null references trips(id) on delete cascade,
+  title text not null,
+  assigned_to uuid references users(id) on delete set null,
+  is_done boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists tasks (
+  id uuid primary key default gen_random_uuid(),
+  trip_id uuid not null references trips(id) on delete cascade,
+  title text not null,
+  assigned_to uuid references users(id) on delete set null,
+  status text not null default 'open',
+  due_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists photos (
+  id uuid primary key default gen_random_uuid(),
+  trip_id uuid not null references trips(id) on delete cascade,
+  uploaded_by uuid references users(id) on delete set null,
+  title text,
+  image_url text not null,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists checklist_items_trip_id_idx on checklist_items(trip_id);
+create index if not exists photos_trip_id_idx on photos(trip_id);
+create index if not exists tasks_trip_id_idx on tasks(trip_id);
