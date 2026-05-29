@@ -1,0 +1,31 @@
+{
+  "name": "Campinho",
+  "short_name": "Campinho",
+  "description": "Checklist, fotos e tarefas para camping em grupo.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f5ed",
+  "theme_color": "#214d3b",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Abrir checklist",
+      "short_name": "Checklist",
+      "url": "./index.html#checklist"
+    },
+    {
+      "name": "Ver fotos",
+      "short_name": "Fotos",
+      "url": "./index.html#gallery"
+    }
+  ]
+}

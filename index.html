@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campinho</title>
+    <meta name="theme-color" content="#214d3b" />
+    <meta name="description" content="Checklist, fotos e tarefas para camping em grupo." />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <section class="onboarding" id="onboarding" aria-label="Entrada no camping">
+      <form class="onboarding-card" id="join-form">
+        <span class="brand-mark">C</span>
+        <span class="eyebrow">Entrar no Campinho</span>
+        <h1>Vincule este celular a uma viagem.</h1>
+        <p>Use seu nome e um codigo de camping. Depois o app lembra deste aparelho automaticamente.</p>
+
+        <label>
+          Seu nome
+          <input id="member-name" name="member-name" autocomplete="name" placeholder="Ex: Ana" required />
+        </label>
+
+        <label>
+          Codigo do camping
+          <input id="trip-code" name="trip-code" autocapitalize="characters" maxlength="12" placeholder="Ex: LAGOA24" required />
+        </label>
+
+        <button class="primary-action" type="submit">Entrar na viagem</button>
+        <small>Para testar, use qualquer codigo. Depois ligamos isso ao Supabase.</small>
+      </form>
+    </section>
+
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Navegacao principal">
+        <div class="brand">
+          <span class="brand-mark">C</span>
+          <div>
+            <strong>Campinho</strong>
+            <span>planejador de camping</span>
+          </div>
+        </div>
+
+        <nav class="nav">
+          <button class="nav-item active" type="button" data-view="dashboard" aria-label="Resumo">
+            <span>R</span>
+            <span>Resumo</span>
+          </button>
+          <button class="nav-item" type="button" data-view="checklist" aria-label="Checklist">
+            <span>C</span>
+            <span>Checklist</span>
+          </button>
+          <button class="nav-item" type="button" data-view="gallery" aria-label="Fotos">
+            <span>F</span>
+            <span>Fotos</span>
+          </button>
+          <button class="nav-item" type="button" data-view="crew" aria-label="Grupo">
+            <span>G</span>
+            <span>Grupo</span>
+          </button>
+        </nav>
+
+        <section class="trip-card">
+          <span class="eyebrow">Proxima viagem</span>
+          <h2>Camping da Lagoa</h2>
+          <p>31 mai - 2 jun - 6 pessoas</p>
+          <div class="weather-row">
+            <span>18 C</span>
+            <span>noite limpa</span>
+          </div>
+        </section>
+      </aside>
+
+      <section class="content">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">App compartilhado</span>
+            <h1>Camping da Lagoa</h1>
+            <p class="session-line" id="session-line">Aparelho ainda nao vinculado</p>
+          </div>
+          <button class="primary-action" type="button" id="add-memory">+ foto da viagem</button>
+          <button class="install-action" type="button" id="install-app" hidden>Instalar app</button>
+        </header>
+
+        <section class="quick-strip" aria-label="Resumo rapido da viagem">
+          <article>
+            <strong>31 mai</strong>
+            <span>saida</span>
+          </article>
+          <article>
+            <strong>18 C</strong>
+            <span>noite limpa</span>
+          </article>
+          <article>
+            <strong>6</strong>
+            <span>pessoas</span>
+          </article>
+        </section>
+
+        <section class="hero" aria-label="Foto do camping">
+          <div class="hero-copy">
+            <span class="badge">82% pronto</span>
+            <h2>Checklist quase fechado, agora falta combinar a comida.</h2>
+          </div>
+        </section>
+
+        <section class="view active" id="dashboard">
+          <div class="metrics">
+            <article>
+              <strong id="packed-count">12</strong>
+              <span>itens separados</span>
+            </article>
+            <article>
+              <strong>4</strong>
+              <span>tarefas abertas</span>
+            </article>
+            <article>
+              <strong>28</strong>
+              <span>fotos na nuvem</span>
+            </article>
+          </div>
+
+          <div class="split-layout">
+            <section class="panel">
+              <div class="panel-header">
+                <h2>Hoje</h2>
+                <span>prioridade</span>
+              </div>
+              <div class="timeline">
+                <div>
+                  <span class="time">18:00</span>
+                  <p>Comprar gelo, agua e carvao</p>
+                </div>
+                <div>
+                  <span class="time">20:30</span>
+                  <p>Separar barraca e testar lanternas</p>
+                </div>
+                <div>
+                  <span class="time">Amanha</span>
+                  <p>Subir rota offline e ponto de encontro</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="panel compact-achievements">
+              <div class="panel-header">
+                <h2>Conquistas</h2>
+                <span>diversao</span>
+              </div>
+              <div class="achievement-grid">
+                <button type="button">Mestre da fogueira</button>
+                <button type="button">Chef do mato</button>
+                <button type="button">Guardiao da lanterna</button>
+                <button type="button">Foto lendaria</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="checklist">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Checklist compartilhado</h2>
+              <span id="progress-label">12 de 15 prontos</span>
+            </div>
+            <div class="checklist" id="checklist-items"></div>
+          </div>
+        </section>
+
+        <section class="view" id="gallery">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Fotos na nuvem</h2>
+              <span>album da viagem</span>
+            </div>
+            <div class="gallery-grid" id="gallery-grid"></div>
+          </div>
+        </section>
+
+        <section class="view" id="crew">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Grupo e tarefas</h2>
+              <span>quem leva o que</span>
+            </div>
+            <div class="crew-list">
+              <article class="invite-card">
+                <span class="avatar">ID</span>
+                <div>
+                  <strong>Codigo da viagem</strong>
+                  <p id="invite-code">LAGOA24</p>
+                </div>
+                <button class="mini-action" type="button" id="copy-code">copiar</button>
+              </article>
+              <article>
+                <span class="avatar">MA</span>
+                <div>
+                  <strong>Marina</strong>
+                  <p>Comida e temperos</p>
+                </div>
+                <span class="status done">ok</span>
+              </article>
+              <article>
+                <span class="avatar">LU</span>
+                <div>
+                  <strong>Lucas</strong>
+                  <p>Barraca extra e cordas</p>
+                </div>
+                <span class="status wait">falta</span>
+              </article>
+              <article>
+                <span class="avatar">BI</span>
+                <div>
+                  <strong>Bia</strong>
+                  <p>Caixa termica e gelo</p>
+                </div>
+                <span class="status done">ok</span>
+              </article>
+              <article>
+                <span class="avatar">VO</span>
+                <div>
+                  <strong>Voce</strong>
+                  <p>Lanternas, fotos e playlist</p>
+                </div>
+                <span class="status wait">falta</span>
+              </article>
+              <article class="device-card">
+                <span class="avatar" id="device-avatar">VO</span>
+                <div>
+                  <strong id="device-name">Voce</strong>
+                  <p id="device-copy">Este celular esta vinculado ao camping.</p>
+                </div>
+                <button class="mini-action" type="button" id="reset-device">trocar</button>
+              </article>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
